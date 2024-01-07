@@ -66,16 +66,12 @@ const images = [
 
 const elementsContainer = document.querySelector(".gallery");
 
-
-
-
-
 const createMarkup = (images) => {
   return images
     .map(
       ({ preview, original, description }) => `
     <li class="gallery-item">
-  <a class="gallery-link" href="large-image.jpg">
+  <a class="gallery-link" href="${original}">
     <img
       class="gallery-image"
       src="${preview}"
@@ -88,6 +84,38 @@ const createMarkup = (images) => {
     .join("");
 };
 
+elementsContainer.innerHTML = createMarkup(images);
+
+const handleProductClick = (event) => {
+  event.preventDefault();
+  if (event.currentTarget === event.target) {
+    return;
+  }
+
+  const instance = basicLightbox.create(`
+    <div class="modal">
+    <img
+    class="modal-image"
+    src="${event.target.dataset.source}"
+    alt="${event.target.alt}"
+    
+  />
+    </div>
+`);
+
+  instance.show();
+
+  const visible = instance.show();
+  console.log(visible);
+
+  if (visible === true) {
+    document.addEventListener("keydown", (event) => {
+      if (event.code === "Escape") {
+        instance.close();
+      }
+    });
+  }
+}
 
 
-elementsContainer.innerHTML = createMarkup(images)
+elementsContainer.addEventListener("click", handleProductClick)
