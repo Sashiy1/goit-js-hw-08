@@ -88,9 +88,12 @@ elementsContainer.innerHTML = createMarkup(images);
 
 const handleProductClick = (event) => {
   event.preventDefault();
+  
   if (!event.target.classList.contains("gallery-image")) {
     return;
   }
+
+  
 
   const instance = basicLightbox.create(
     `
@@ -102,16 +105,19 @@ const handleProductClick = (event) => {
       />
     </div>
   `,
+
     {
       onShow: () => {
         document.addEventListener("keydown", escClose);
       },
 
       onClose: () => {
-        document.removeEventListener("keydown", escClose)
+        document.removeEventListener("keydown", escClose);
       },
     }
   );
+
+  instance.show();
 
   function escClose(event) {
     if (event.code === "Escape") {
@@ -119,9 +125,7 @@ const handleProductClick = (event) => {
     }
   }
 
-  instance.show();
+
 };
 
 elementsContainer.addEventListener("click", handleProductClick);
-
-
