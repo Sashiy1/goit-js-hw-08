@@ -88,7 +88,7 @@ elementsContainer.innerHTML = createMarkup(images);
 
 const handleProductClick = (event) => {
   event.preventDefault();
-  if (event.currentTarget === event.target) {
+  if (!event.target.classList.contains('gallery-image')) {
     return;
   }
 
@@ -101,20 +101,24 @@ const handleProductClick = (event) => {
     
   />
     </div>
-`);
+`);}
 
-  instance.show();
+//   instance.show();
 
-  const visible = instance.show();
-  console.log(visible);
+//   const visible = instance.show();
+//   console.log(visible);
 
-  if (visible === true) {
-    document.addEventListener("keydown", (event) => {
-      if (event.code === "Escape") {
-        instance.close();
-      }
-    });
-  }
+//   if (visible === true) {
+//     document.addEventListener("keydown", (event) => {
+//       if (event.code === "Escape") {
+//         instance.close();
+//       }
+//     });
+//   }
+// }
+
+onShow: (instance) => {
+  
 }
 
 
