@@ -88,38 +88,40 @@ elementsContainer.innerHTML = createMarkup(images);
 
 const handleProductClick = (event) => {
   event.preventDefault();
-  if (!event.target.classList.contains('gallery-image')) {
+  if (!event.target.classList.contains("gallery-image")) {
     return;
   }
 
-  const instance = basicLightbox.create(`
+  const instance = basicLightbox.create(
+    `
     <div class="modal">
-    <img
-    class="modal-image"
-    src="${event.target.dataset.source}"
-    alt="${event.target.alt}"
-    
-  />
+      <img
+        class="modal-image"
+        src="${event.target.dataset.source}"
+        alt="${event.target.alt}"
+      />
     </div>
-`);}
+  `,
+    {
+      onShow: () => {
+        document.addEventListener("keydown", escClose);
+      },
 
-//   instance.show();
+      onClose: () => {
+        document.removeEventListener("keydown", escClose)
+      },
+    }
+  );
 
-//   const visible = instance.show();
-//   console.log(visible);
+  function escClose(event) {
+    if (event.code === "Escape") {
+      instance.close();
+    }
+  }
 
-//   if (visible === true) {
-//     document.addEventListener("keydown", (event) => {
-//       if (event.code === "Escape") {
-//         instance.close();
-//       }
-//     });
-//   }
-// }
+  instance.show();
+};
 
-onShow: (instance) => {
-  
-}
+elementsContainer.addEventListener("click", handleProductClick);
 
 
-elementsContainer.addEventListener("click", handleProductClick)
